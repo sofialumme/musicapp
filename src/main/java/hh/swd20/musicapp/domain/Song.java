@@ -26,9 +26,8 @@ public class Song {
 		super();
 	}
 
-	public Song(long id, int trackno, String name, int length, Album album) {
+	public Song(int trackno, String name, int length, Album album) {
 		super();
-		this.id = id;
 		this.trackno = trackno;
 		this.name = name;
 		this.length = length;

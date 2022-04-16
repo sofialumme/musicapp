@@ -39,9 +39,8 @@ public class Album {
 		super();
 	}
 
-	public Album(long id, String name, int year, Artist artist, Genre genre) {
+	public Album(String name, int year, Artist artist, Genre genre) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.year = year;
 		this.artist = artist;

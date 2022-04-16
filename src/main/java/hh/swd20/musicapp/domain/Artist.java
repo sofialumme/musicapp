@@ -29,9 +29,8 @@ public class Artist {
 		super();
 	}
 
-	public Artist(long id, String name, String country) {
+	public Artist( String name, String country) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.country = country;
 	}
