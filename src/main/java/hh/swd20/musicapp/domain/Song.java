@@ -16,7 +16,6 @@ public class Song {
 	
 	private int trackno;
 	private String name;
-	private int length;
 	
 	@ManyToOne
     @JoinColumn(name = "album_id")
@@ -26,11 +25,10 @@ public class Song {
 		super();
 	}
 
-	public Song(int trackno, String name, int length, Album album) {
+	public Song(int trackno, String name, Album album) {
 		super();
 		this.trackno = trackno;
 		this.name = name;
-		this.length = length;
 		this.album = album;
 	}
 
@@ -58,14 +56,6 @@ public class Song {
 		this.name = name;
 	}
 
-	public int getLength() {
-		return length;
-	}
-
-	public void setLength(int length) {
-		this.length = length;
-	}
-
 	public Album getAlbum() {
 		return album;
 	}
@@ -76,7 +66,7 @@ public class Song {
 
 	@Override
 	public String toString() {
-		return "Song [id=" + id + ", trackno=" + trackno + ", name=" + name + ", length=" + length + ", album=" + album
+		return "Song [id=" + id + ", trackno=" + trackno + ", name=" + name + ", album=" + album
 				+ "]";
 	}	
 

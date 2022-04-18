@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Albums</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Albums</h1>
+	<table class="table table-striped">
+		<tr>
+			<th>Name</th>
+			<th>Year</th>
+			<th>Artist</th>
+			<th>Genre</th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr th:each="album : ${albums}">
+			<td th:text="${album.name}">name</td>
+			<td th:text="${album.year}">country</td>
+			<td th:text="${album.artist.name}"></td>
+			<td th:text="${album.genre.name}"></td>
+			<td><a th:href="@{/albumlist/{id}(id=${album.id})}"
+				class="btn btn-primary">View Tracks</a></td>
+			<td><a th:href="@{/albumlist/edit/{id}(id=${album.id})}"
+				class="btn btn-warning">Edit</a></td>
+		</tr>
+	</table>
+	<a href="/albumlist/add" class="btn btn-success">Add a New Album</a>
+	<a href="/" class="btn btn-secondary">Front Page</a>
+</body>
+</html>

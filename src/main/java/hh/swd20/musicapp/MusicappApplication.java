@@ -49,11 +49,11 @@ public class MusicappApplication {
 			albumRepository.save(album3);
 			
 			log.info("save some demo songs");
-			Song song1 = new Song(1, "The End", 31, album1);
-			Song song2 = new Song(2, "Mercurial World", 181, album1);
-			Song song3 = new Song(1, "Ashes", 81, album2);
-			Song song4 = new Song(2, "Rats", 266, album2);
-			Song song5 = new Song(1, "Imperium", 100, album3);
+			Song song1 = new Song(1, "The End", album1);
+			Song song2 = new Song(2, "Mercurial World", album1);
+			Song song3 = new Song(1, "Ashes", album2);
+			Song song4 = new Song(2, "Rats", album2);
+			Song song5 = new Song(1, "Imperium", album3);
 			songRepository.save(song1);
 			songRepository.save(song2);
 			songRepository.save(song3);

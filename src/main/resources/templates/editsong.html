@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Edit Track</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Edit Track</h1>
+	<div>
+		<form th:object="${song}" th:action="@{/songlist/save}" action="#" method="post">
+			<label for="id"></label>
+			<input type="hidden" id="id" th:field="*{id}" />
+			<label for="trackno">Track No.</label>
+			<input type="text" id="trackno" th:field="*{trackno}" />
+			<div style="clear: both; display: block; height: 1em;"></div>
+			<label for="name">Name</label>
+			<input type="text" th:field="*{name}" />
+			<div style="clear: both; display: block; height: 1em;"></div>
+			<select id="albums" th:field="*{album}" hidden="hidden">
+				<option th:value="${album.id}"></option>
+			</select>
+			<div style="clear: both; display: block; height: 1em;"></div>
+			<input type="submit" value="Save" class="btn btn-success"></input>
+		</form>
+	</div>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a th:href="@{/albumlist/{id}(id=${album.id})}" class="btn btn-primary">View Album</a>
+	<a th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning">Edit Album</a>
+	<a href="/" class="btn btn-secondary">Front Page</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Genres</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Genres</h1>
+	<p><b>Warning!</b> Deleting a genre will delete all albums associated with it as well.</p>
+	<table class="table table-striped">
+		<tr>
+			<th>Name</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr th:each="genre : ${genres}">
+			<td th:text="${genre.name}">name</td>
+			<td><a th:href="@{/genrelist/{id}(id=${genre.id})}"
+				class="btn btn-primary">View Albums</a></td>
+			<td><a th:href="@{/genrelist/edit/{id}(id=${genre.id})}"
+				class="btn btn-warning">Edit</a></td>
+			<td><a th:href="@{/genrelist/delete/{id}(id=${genre.id})}" 
+				class="btn btn-danger">Delete</a></td>
+		</tr>
+	</table>
+	<a href="/genrelist/add" class="btn btn-success">Add a New Genre</a>
+	<a href="/" class="btn btn-secondary">Front Page</a>
+</body>
+</html>
