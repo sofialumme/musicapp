@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Album {
 	
@@ -22,8 +20,7 @@ public class Album {
 	
 	private String name;
 	private int year;
-	
-	@JsonIgnore
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "album")
 	private List<Song> songs;
 	

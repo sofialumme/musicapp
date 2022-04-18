@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Song {
 	
@@ -17,6 +19,7 @@ public class Song {
 	private int trackno;
 	private String name;
 	
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "album_id")
     private Album album;

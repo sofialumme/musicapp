@@ -1,12 +1,17 @@
 package hh.swd20.musicapp.web;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hh.swd20.musicapp.domain.Album;
 import hh.swd20.musicapp.domain.AlbumRepository;
@@ -15,41 +20,48 @@ import hh.swd20.musicapp.domain.GenreRepository;
 import hh.swd20.musicapp.domain.Song;
 import hh.swd20.musicapp.domain.SongRepository;
 
+@CrossOrigin
 @Controller
 public class AlbumController {
-	
+
 	@Autowired
 	private AlbumRepository albumRepository;
-	
+
 	@Autowired
 	private ArtistRepository artistRepository;
-	
+
 	@Autowired
 	private GenreRepository genreRepository;
-	
+
 	@Autowired
 	private SongRepository songRepository;
-	
+
+	// user endpoints
+
+	// list all albums
 	@GetMapping("/albumlist")
 	public String getAlbums(Model model) {
 		model.addAttribute("albums", albumRepository.findAllSortByName());
 		return "albumlist";
 	}
-	
+
+	// list all albums by an artist
 	@GetMapping("/artistlist/{id}")
 	public String getAlbumsByArtist(@PathVariable("id") Long artistId, Model model) {
 		model.addAttribute("artist", artistRepository.findById(artistId).get());
 		model.addAttribute("albums", albumRepository.findByArtistSortByYear(artistId));
 		return "albumlistbyartist";
 	}
-	
+
+	// list all albums from a genre
 	@GetMapping("/genrelist/{id}")
 	public String getAlbumsByGenre(@PathVariable("id") Long genreId, Model model) {
 		model.addAttribute("genre", genreRepository.findById(genreId).get());
 		model.addAttribute("albums", albumRepository.findByGenreSortByName(genreId));
 		return "albumlistbygenre";
 	}
-	
+
+	// add a new album
 	@RequestMapping("/albumlist/add")
 	public String addAlbum(Model model) {
 		model.addAttribute("album", new Album());
@@ -57,13 +69,15 @@ public class AlbumController {
 		model.addAttribute("genres", genreRepository.findAllSortByName());
 		return "addalbum";
 	}
-	
+
+	// save an added album
 	@PostMapping("/albumlist/save")
 	public String saveAlbum(Album album) {
 		albumRepository.save(album);
 		return "redirect:/albumlist/edit/" + album.getId();
 	}
-	
+
+	// edit an existing album and add songs to it
 	@RequestMapping("/albumlist/edit/{id}")
 	public String editAlbum(@PathVariable("id") Long albumId, Model model) {
 		model.addAttribute("album", albumRepository.findById(albumId).get());
@@ -73,11 +87,38 @@ public class AlbumController {
 		model.addAttribute("song", new Song());
 		return "editalbum";
 	}
-	
+
+	// delete an album (and its songs)
 	@GetMapping("/albumlist/delete/{id}")
 	public String deleteAlbum(@PathVariable("id") Long albumId) {
 		albumRepository.deleteById(albumId);
 		return "redirect:/";
+	}
+
+	// REST endpoints
+
+	// REST: list all albums alphabetically
+	@GetMapping("/albums")
+	public @ResponseBody List<Album> albumListRest() {
+		return (List<Album>) albumRepository.findAllSortByName();
+	}
+
+	// REST: get a specific album by id
+	@GetMapping("/albums/{id}")
+	public @ResponseBody Optional<Album> findAlbumByIdRest(@PathVariable("id") Long albumId) {
+		return (Optional<Album>) albumRepository.findById(albumId);
+	}
+
+	// REST: list all albums from an artist by id
+	@GetMapping("/artists/{id}/albums")
+	public @ResponseBody List<Album> listAlbumsByArtistIdRest(@PathVariable("id") Long artistId) {
+		return (List<Album>) albumRepository.findByArtistSortByName(artistId);
+	}
+
+	// REST: list all albums from a genre by id
+	@GetMapping("/genres/{id}/albums")
+	public @ResponseBody List<Album> listAlbumsByGenreIdRest(@PathVariable("id") Long genreId) {
+		return (List<Album>) albumRepository.findByGenreSortByName(genreId);
 	}
 
 }
