@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,6 +35,7 @@ public class GenreController {
 	
 	// add a new genre
 	@RequestMapping("/genrelist/add")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String addGenre(Model model) {
 		model.addAttribute("genre", new Genre());
 		return "addgenre";
@@ -41,6 +43,7 @@ public class GenreController {
 	
 	// save an added genre
 	@PostMapping("/genrelist/save")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String saveGenre(Genre genre) {
 		genreRepository.save(genre);
 		return "redirect:/genrelist";
@@ -48,6 +51,7 @@ public class GenreController {
 	
 	// edit an existing genre
 	@RequestMapping("/genrelist/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editGenre(@PathVariable("id") Long genreId, Model model) {
 		model.addAttribute("genre", genreRepository.findById(genreId));
 		return "editgenre";
@@ -55,6 +59,7 @@ public class GenreController {
 
 	// delete a genre (and all its albums and songs)
 	@GetMapping("/genrelist/delete/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteGenre(@PathVariable("id") Long genreId) {
 		genreRepository.deleteById(genreId);
 		return "redirect:/genrelist";

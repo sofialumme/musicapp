@@ -3,6 +3,7 @@ package hh.swd20.musicapp.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,6 +39,7 @@ public class SongController {
 
 	// edit an existing song
 	@RequestMapping("/songlist/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editSong(@PathVariable("id") Long songId, Model model) {
 		model.addAttribute("song", songRepository.findById(songId));
 		model.addAttribute("album", songRepository.findById(songId).get().getAlbum());
@@ -46,6 +48,7 @@ public class SongController {
 
 	// save an added song
 	@PostMapping("/songlist/save")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String saveSong(Song song) {
 		songRepository.save(song);
 		return "redirect:/albumlist/edit/" + song.getAlbum().getId();
@@ -53,6 +56,7 @@ public class SongController {
 
 	// delete a song
 	@GetMapping("/songlist/delete/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteSong(@PathVariable("id") Long songId) {
 		Long albumId = songRepository.findById(songId).get().getAlbum().getId();
 		songRepository.deleteById(songId);

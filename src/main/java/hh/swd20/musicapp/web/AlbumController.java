@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -63,6 +64,7 @@ public class AlbumController {
 
 	// add a new album
 	@RequestMapping("/albumlist/add")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String addAlbum(Model model) {
 		model.addAttribute("album", new Album());
 		model.addAttribute("artists", artistRepository.findAllSortByName());
@@ -72,6 +74,7 @@ public class AlbumController {
 
 	// save an added album
 	@PostMapping("/albumlist/save")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String saveAlbum(Album album) {
 		albumRepository.save(album);
 		return "redirect:/albumlist/edit/" + album.getId();
@@ -79,6 +82,7 @@ public class AlbumController {
 
 	// edit an existing album and add songs to it
 	@RequestMapping("/albumlist/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editAlbum(@PathVariable("id") Long albumId, Model model) {
 		model.addAttribute("album", albumRepository.findById(albumId).get());
 		model.addAttribute("artists", artistRepository.findAllSortByName());
@@ -90,6 +94,7 @@ public class AlbumController {
 
 	// delete an album (and its songs)
 	@GetMapping("/albumlist/delete/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteAlbum(@PathVariable("id") Long albumId) {
 		albumRepository.deleteById(albumId);
 		return "redirect:/";
@@ -120,5 +125,5 @@ public class AlbumController {
 	public @ResponseBody List<Album> listAlbumsByGenreIdRest(@PathVariable("id") Long genreId) {
 		return (List<Album>) albumRepository.findByGenreSortByName(genreId);
 	}
-
+	
 }

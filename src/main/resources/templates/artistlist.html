@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Artists</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,14 +9,14 @@
 </head>
 <body>
 	<h1>Artists</h1>
-	<p><b>Warning!</b> Deleting an artist will delete all their albums as well.</p>
+	<p sec:authorize="hasAuthority('ADMIN')"><b>Warning!</b> Deleting an artist will delete all their albums as well.</p>
 	<table class="table table-striped">
 		<tr>
 			<th>Name</th>
 			<th>Country</th>
 			<th></th>
-			<th></th>
-			<th></th>
+			<th sec:authorize="hasAuthority('ADMIN')"></th>
+			<th sec:authorize="hasAuthority('ADMIN')"></th>
 		</tr>
 
 		<tr th:each="artist : ${artists}">
@@ -23,13 +24,13 @@
 			<td th:text="${artist.country}">country</td>
 			<td><a th:href="@{/artistlist/{id}(id=${artist.id})}"
 				class="btn btn-primary">View Albums</a></td>
-			<td><a th:href="@{/artistlist/edit/{id}(id=${artist.id})}"
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/artistlist/edit/{id}(id=${artist.id})}"
 				class="btn btn-warning">Edit</a></td>
-			<td><a th:href="@{/artistlist/delete/{id}(id=${artist.id})}" 
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/artistlist/delete/{id}(id=${artist.id})}" 
 				class="btn btn-danger">Delete</a></td>
 		</tr>
 	</table>
-	<a href="/artistlist/add" class="btn btn-success">Add a New Artist</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success">Add a New Artist</a>
 	<a href="/" class="btn btn-secondary">Front Page</a>
 </body>
 </html>

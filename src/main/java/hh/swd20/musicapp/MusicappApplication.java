@@ -15,6 +15,8 @@ import hh.swd20.musicapp.domain.Genre;
 import hh.swd20.musicapp.domain.GenreRepository;
 import hh.swd20.musicapp.domain.Song;
 import hh.swd20.musicapp.domain.SongRepository;
+import hh.swd20.musicapp.domain.User;
+import hh.swd20.musicapp.domain.UserRepository;
 
 @SpringBootApplication
 public class MusicappApplication {
@@ -26,7 +28,7 @@ public class MusicappApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner demo(GenreRepository genreRepository, ArtistRepository artistRepository, AlbumRepository albumRepository, SongRepository songRepository) {
+	public CommandLineRunner demo(GenreRepository genreRepository, ArtistRepository artistRepository, AlbumRepository albumRepository, SongRepository songRepository, UserRepository userRepository) {
 		return (args) -> {
 			log.info("save some demo genres");
 			Genre genre1 = new Genre("Pop");
@@ -79,6 +81,11 @@ public class MusicappApplication {
 			for (Song song : songRepository.findAll()) {
 				log.info(song.toString());
 			}
+			
+			//create a demo admin user
+			// musicapp_admin, hunter2
+			User admin = new User("musicapp_admin", "$2a$10$8smma/bEFXpJw5ZwHhuoz.MvAJcUbgJO7raj7Yotvz7Dr8x74mWIS", "ADMIN");
+			userRepository.save(admin);
 		};
 	}
 

@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Music Database</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,14 +9,23 @@
 </head>
 <body>
 	<h1>Welcome to the Music Database!</h1>
-	
+
 	<a href="/artistlist" class="btn btn-primary">Show All Artists</a>
-	<a href="/artistlist/add" class="btn btn-success">Add a New Artist</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success">Add a New Artist</a>
 	<div style="clear: both; display: block; height: 1em;"></div>
 	<a href="/genrelist" class="btn btn-primary">Show All Genres</a>
-	<a href="/genrelist/add" class="btn btn-success">Add a New Genre</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/genrelist/add" class="btn btn-success">Add a New Genre</a>
 	<div style="clear: both; display: block; height: 1em;"></div>
 	<a href="/albumlist" class="btn btn-primary">Show All Albums</a>
-	<a href="/albumlist/add" class="btn btn-success">Add a New Album</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/albumlist/add" class="btn btn-success">Add a New Album</a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a sec:authorize="isAnonymous()" href="/login" class="btn btn-primary">Sign In</a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<div>
+		<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
+			method="post">
+			<input type="submit" class="btn btn-danger" value="Sign Out" />
+		</form>
+	</div>
 </body>
 </html>

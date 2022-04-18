@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Tracks</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,19 +14,18 @@
 		<tr>
 			<th>No.</th>
 			<th>Name</th>
-			<th></th>
-			<th></th>
+			<th sec:authorize="hasAuthority('ADMIN')"></th>
 		</tr>
 
 		<tr th:each="song : ${songs}">
 			<td th:text="${song.trackno}">trackno</td>
 			<td th:text="${song.name}">name</td>
-			<td><a th:href="@{/songlist/edit/{id}(id=${song.id})}"
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/songlist/edit/{id}(id=${song.id})}"
 				class="btn btn-warning">Edit</a></td>
 		</tr>
 	</table>
-	<a th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning">Edit Album</a>
-	<a th:href="@{/albumlist/delete/{id}(id=${album.id})}" class="btn btn-danger">Delete Album</a>
+	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning">Edit Album</a>
+	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/delete/{id}(id=${album.id})}" class="btn btn-danger">Delete Album</a>
 	<div style="clear: both; display: block; height: 1em;"></div>
 	<a th:href="@{/artistlist/{id}(id=${album.artist.id})}" class="btn btn-primary" th:text="'All ' + ${album.artist.name} + ' Albums'"></a>
 	<a th:href="@{/genrelist/{id}(id=${album.genre.id})}" class="btn btn-primary" th:text="'All ' + ${album.genre.name} + ' Albums'"></a>

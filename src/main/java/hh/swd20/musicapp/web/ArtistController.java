@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,6 +35,7 @@ public class ArtistController {
 
 	// add a new artist
 	@RequestMapping("/artistlist/add")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String addArtist(Model model) {
 		model.addAttribute("artist", new Artist());
 		return "addartist";
@@ -41,6 +43,7 @@ public class ArtistController {
 
 	// save an added artist
 	@PostMapping("/artistlist/save")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String saveArtist(Artist artist) {
 		artistRepository.save(artist);
 		return "redirect:/artistlist";
@@ -48,6 +51,7 @@ public class ArtistController {
 
 	// edit an existing artist
 	@RequestMapping("/artistlist/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editArtist(@PathVariable("id") Long artistId, Model model) {
 		model.addAttribute("artist", artistRepository.findById(artistId));
 		return "editartist";
@@ -55,6 +59,7 @@ public class ArtistController {
 
 	// delete an artist (and all their albums and songs)
 	@GetMapping("/artistlist/delete/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteArtist(@PathVariable("id") Long artistId) {
 		artistRepository.deleteById(artistId);
 		return "redirect:/artistlist";
