@@ -10,14 +10,16 @@
 <body>
 	<h1>Edit Artist</h1>
 	<div>
-		<form th:object="${artist}" th:action="@{/artistlist/save}" action="#"
-			method="post">
-			<label for="id"></label> <input type="hidden" id="id"
-				th:field="*{id}" /> <label for="name">Title</label> <input
-				type="text" id="name" th:field="*{name}" />
+		<form th:object="${artist}" th:action="@{/artistlist/saveedit}" action="#" method="post">
+			<label for="id"></label>
+			<input type="hidden" id="id" th:field="*{id}" />
+			<label for="name">Title</label>
+			<input type="text" id="name" th:field="*{name}" />
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
-			<label for="country">Country</label> <input type="text" id="country"
-				th:field="*{country}" />
+			<label for="country">Country</label>
+			<input type="text" id="country" th:field="*{country}" />
+			<p th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
 			<input type="submit" value="Save" class="btn btn-success"></input>
 		</form>

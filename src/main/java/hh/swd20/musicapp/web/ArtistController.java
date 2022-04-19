@@ -49,13 +49,26 @@ public class ArtistController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String saveArtist(@Valid Artist artist, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:/artistlist";
+			return "addartist";
 			
 		} else {
 			artistRepository.save(artist);
 			return "redirect:/artistlist";
 		}
 	}
+	
+	// save an added artist
+		@PostMapping("/artistlist/saveedit")
+		@PreAuthorize("hasAuthority('ADMIN')")
+		public String saveArtistEdit(@Valid Artist artist, BindingResult result) {
+			if (result.hasErrors()) {
+				return "editartist";
+				
+			} else {
+				artistRepository.save(artist);
+				return "redirect:/artistlist";
+			}
+		}
 
 	// edit an existing artist
 	@RequestMapping("/artistlist/edit/{id}")

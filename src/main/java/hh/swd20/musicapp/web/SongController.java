@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hh.swd20.musicapp.domain.AlbumRepository;
+import hh.swd20.musicapp.domain.ArtistRepository;
+import hh.swd20.musicapp.domain.GenreRepository;
 import hh.swd20.musicapp.domain.Song;
 import hh.swd20.musicapp.domain.SongRepository;
 
@@ -29,6 +31,12 @@ public class SongController {
 
 	@Autowired
 	private AlbumRepository albumRepository;
+	
+	@Autowired
+	private ArtistRepository artistRepository;
+	
+	@Autowired
+	private GenreRepository genreRepository;
 
 	// user endpoints
 
@@ -52,10 +60,28 @@ public class SongController {
 	// save an added song
 	@PostMapping("/songlist/save")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String saveSong(@Valid Song song, BindingResult result) {
+	public String saveSong(@Valid Song song, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute("album", albumRepository.findById(song.getAlbum().getId()).get());
+			model.addAttribute("artists", artistRepository.findAllSortByName());
+			model.addAttribute("genres", genreRepository.findAllSortByName());
+			model.addAttribute("songs", songRepository.findByAlbumSortByTrackno(song.getAlbum().getId()));
+			return "editalbum";
+
+		} else {
+			songRepository.save(song);
 			return "redirect:/albumlist/edit/" + song.getAlbum().getId();
-			
+		}
+	}
+
+	// save an edited song
+	@PostMapping("/songlist/saveedit")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public String saveSongEdit(@Valid Song song, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("album", songRepository.findById(song.getId()).get().getAlbum());
+			return "editsong";
+
 		} else {
 			songRepository.save(song);
 			return "redirect:/albumlist/edit/" + song.getAlbum().getId();

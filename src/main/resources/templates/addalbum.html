@@ -11,10 +11,12 @@
 	<div>
 		<form th:object="${album}" th:action="@{/albumlist/save}" action="#" method="post">
 			<label for="name">Name</label>
-			<input type="text" th:field="*{name}" />
+			<input type="text" id="name" th:field="*{name}" />
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
 			<label for="year">Year</label>
-			<input type="text" th:field="*{year}" />
+			<input type="text" id="year" th:field="*{year}" />
+			<p th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
 			<label for="artist">Artist</label>
 			<select id="artists" th:field="*{artist}" class="form-control" style="width:10%;">

@@ -9,14 +9,16 @@
 <body>
 	<h1>Edit Track</h1>
 	<div>
-		<form th:object="${song}" th:action="@{/songlist/save}" action="#" method="post">
+		<form th:object="${song}" th:action="@{/songlist/saveedit}" action="#" method="post">
 			<label for="id"></label>
 			<input type="hidden" id="id" th:field="*{id}" />
 			<label for="trackno">Track No.</label>
 			<input type="text" id="trackno" th:field="*{trackno}" />
+			<p th:if="${#fields.hasErrors('trackno')}" th:errors="*{trackno}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
 			<label for="name">Name</label>
 			<input type="text" th:field="*{name}" />
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
 			<select id="albums" th:field="*{album}" hidden="hidden">
 				<option th:value="${album.id}"></option>

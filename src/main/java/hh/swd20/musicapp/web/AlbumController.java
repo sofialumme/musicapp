@@ -78,10 +78,29 @@ public class AlbumController {
 	// save an added album
 	@PostMapping("/albumlist/save")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String saveAlbum(@Valid Album album, BindingResult result) {
+	public String saveAlbum(@Valid Album album, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return "redirect:/albumlist";
-			
+			model.addAttribute("artists", artistRepository.findAllSortByName());
+			model.addAttribute("genres", genreRepository.findAllSortByName());
+			return "addalbum";
+
+		} else {
+			albumRepository.save(album);
+			return "redirect:/albumlist/edit/" + album.getId();
+		}
+	}
+
+	// save an edited album
+	@PostMapping("/albumlist/saveedit")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public String saveAlbumEdit(@Valid Album album, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("artists", artistRepository.findAllSortByName());
+			model.addAttribute("genres", genreRepository.findAllSortByName());
+			model.addAttribute("songs", songRepository.findByAlbumSortByTrackno(album.getId()));
+			model.addAttribute("song", new Song());
+			return "editalbum";
+
 		} else {
 			albumRepository.save(album);
 			return "redirect:/albumlist/edit/" + album.getId();
@@ -133,5 +152,5 @@ public class AlbumController {
 	public @ResponseBody List<Album> listAlbumsByGenreIdRest(@PathVariable("id") Long genreId) {
 		return (List<Album>) albumRepository.findByGenreSortByName(genreId);
 	}
-	
+
 }

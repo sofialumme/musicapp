@@ -23,19 +23,19 @@ import hh.swd20.musicapp.domain.GenreRepository;
 @CrossOrigin
 @Controller
 public class GenreController {
-	
+
 	@Autowired
 	private GenreRepository genreRepository;
-	
+
 	// user endpoints
-	
+
 	// list all genres
 	@GetMapping("/genrelist")
 	public String getGenres(Model model) {
 		model.addAttribute("genres", genreRepository.findAllSortByName());
 		return "genrelist";
 	}
-	
+
 	// add a new genre
 	@RequestMapping("/genrelist/add")
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -43,20 +43,33 @@ public class GenreController {
 		model.addAttribute("genre", new Genre());
 		return "addgenre";
 	}
-	
+
 	// save an added genre
 	@PostMapping("/genrelist/save")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String saveGenre(@Valid Genre genre, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:/genrelist";
-			
+			return "addgenre";
+
 		} else {
 			genreRepository.save(genre);
 			return "redirect:/genrelist";
 		}
 	}
-	
+
+	// save an edited genre
+	@PostMapping("/genrelist/saveedit")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public String saveGenreEdit(@Valid Genre genre, BindingResult result) {
+		if (result.hasErrors()) {
+			return "editgenre";
+
+		} else {
+			genreRepository.save(genre);
+			return "redirect:/genrelist";
+		}
+	}
+
 	// edit an existing genre
 	@RequestMapping("/genrelist/edit/{id}")
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -72,7 +85,7 @@ public class GenreController {
 		genreRepository.deleteById(genreId);
 		return "redirect:/genrelist";
 	}
-	
+
 	// REST endpoints
 
 	// REST: list all genres alphabetically
