@@ -1,28 +1,32 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Login</title>
+<title th:text="#{sign-in}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet"
 	th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<div th:if="${param.error}">Invalid username and password.</div>
+	<div th:if="${param.error}" th:text="#{login-error}"></div>
 	<form th:action="@{/login}" method="post">
 		<div>
-			<label> User Name : <input type="text" name="username" />
-			</label>
+			<label for="username" th:text="#{username}"></label>
+			<input type="text" name="username" />
 		</div>
 		<div>
-			<label> Password: <input type="password" name="password" /></label>
+			<label for="password" th:text="#{password}"></label>
+			<input type="password" name="password" />
 		</div>
 		<div>
-			<input type="submit" class="btn btn-success" value="Sign In" />
+			<button type="submit" class="btn btn-success" th:text="#{sign-in}"></button>
 		</div>
 	</form>
 	<div style="clear: both; display: block; height: 1em;"></div>
 	<div>
-		<a href="/" class="btn btn-secondary">Front Page</a>
+		<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
 	</div>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a href="/login?lang=en" class="btn btn-primary">EN</a>
+	<a href="/login?lang=fi" class="btn btn-primary">FI</a>
 </body>
 </html>

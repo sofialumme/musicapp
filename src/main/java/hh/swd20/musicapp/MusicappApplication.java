@@ -1,11 +1,19 @@
 package hh.swd20.musicapp;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import hh.swd20.musicapp.domain.Album;
 import hh.swd20.musicapp.domain.AlbumRepository;
@@ -18,6 +26,8 @@ import hh.swd20.musicapp.domain.SongRepository;
 import hh.swd20.musicapp.domain.User;
 import hh.swd20.musicapp.domain.UserRepository;
 
+
+// main application
 @SpringBootApplication
 public class MusicappApplication {
 	

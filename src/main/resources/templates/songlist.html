@@ -2,18 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>Tracks</title>
+<title th:text="#{tracks-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
 	<h1 th:text="${album.name}"></h1>
 	<h2 th:text="${album.artist.name} + ' ● ' + ${album.year} + ' ● ' + ${album.genre.name}"></h2>
-	<h2>Tracks</h2>
+	<h2 th:text="#{tracks-heading}"></h2>
 	<table class="table table-striped">
 		<tr>
-			<th>No.</th>
-			<th>Name</th>
+			<th th:text="#{trackno}"></th>
+			<th th:text="#{name}"></th>
 			<th sec:authorize="hasAuthority('ADMIN')"></th>
 		</tr>
 
@@ -21,14 +21,17 @@
 			<td th:text="${song.trackno}">trackno</td>
 			<td th:text="${song.name}">name</td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/songlist/edit/{id}(id=${song.id})}"
-				class="btn btn-warning">Edit</a></td>
+				class="btn btn-warning" th:text="#{edit}"></a></td>
 		</tr>
 	</table>
-	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning">Edit Album</a>
-	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/delete/{id}(id=${album.id})}" class="btn btn-danger">Delete Album</a>
+	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning" th:text="#{edit-album}"></a>
+	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/delete/{id}(id=${album.id})}" class="btn btn-danger" th:text="#{delete-album}"></a>
 	<div style="clear: both; display: block; height: 1em;"></div>
-	<a th:href="@{/artistlist/{id}(id=${album.artist.id})}" class="btn btn-primary" th:text="'All ' + ${album.artist.name} + ' Albums'"></a>
-	<a th:href="@{/genrelist/{id}(id=${album.genre.id})}" class="btn btn-primary" th:text="'All ' + ${album.genre.name} + ' Albums'"></a>
-	<a href="/" class="btn btn-secondary">Front Page</a>
+	<a th:href="@{/artistlist/{id}(id=${album.artist.id})}" class="btn btn-primary" th:text="#{view-albums-artist-1} + ' ' + ${album.artist.name} + ' ' + #{view-albums-artist-2}"></a>
+	<a th:href="@{/genrelist/{id}(id=${album.genre.id})}" class="btn btn-primary" th:text="#{view-albums-genre-1} + ' ' + ${album.genre.name} + ' ' + #{view-albums-genre-2}"></a>
+	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a th:href="@{'/albumlist/' + ${album.id}} + '?lang=en'" class="btn btn-primary">EN</a>
+    <a th:href="@{'/albumlist/' + ${album.id}} + '?lang=fi'" class="btn btn-primary">FI</a>
 </body>
 </html>

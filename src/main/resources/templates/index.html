@@ -2,30 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>Music Database</title>
+<title th:text="#{index-title}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet"
 	th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>Welcome to the Music Database!</h1>
+	<h1 th:text="#{index-heading}"></h1>
 
-	<a href="/artistlist" class="btn btn-primary">Show All Artists</a>
-	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success">Add a New Artist</a>
+	<a href="/artistlist" class="btn btn-primary" th:text="#{all-artists}"></a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success" th:text="#{new-artist}"></a>
 	<div style="clear: both; display: block; height: 1em;"></div>
-	<a href="/genrelist" class="btn btn-primary">Show All Genres</a>
-	<a sec:authorize="hasAuthority('ADMIN')" href="/genrelist/add" class="btn btn-success">Add a New Genre</a>
+	<a href="/genrelist" class="btn btn-primary" th:text="#{all-genres}"></a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/genrelist/add" class="btn btn-success" th:text="#{new-genre}"></a>
 	<div style="clear: both; display: block; height: 1em;"></div>
-	<a href="/albumlist" class="btn btn-primary">Show All Albums</a>
-	<a sec:authorize="hasAuthority('ADMIN')" href="/albumlist/add" class="btn btn-success">Add a New Album</a>
+	<a href="/albumlist" class="btn btn-primary" th:text="#{all-albums}"></a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/albumlist/add" class="btn btn-success" th:text="#{new-album}"></a>
 	<div style="clear: both; display: block; height: 1em;"></div>
-	<a sec:authorize="isAnonymous()" href="/login" class="btn btn-primary">Sign In</a>
+	<a sec:authorize="isAnonymous()" href="/login" class="btn btn-primary" th:text="#{sign-in}">Sign In</a>
 	<div style="clear: both; display: block; height: 1em;"></div>
 	<div>
 		<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
 			method="post">
-			<input type="submit" class="btn btn-danger" value="Sign Out" />
+			<button type="submit" class="btn btn-danger" th:text="#{sign-out}"></button>
 		</form>
 	</div>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a href="/?lang=en" class="btn btn-primary">EN</a>
+    <a href="/?lang=fi" class="btn btn-primary">FI</a>
 </body>
 </html>

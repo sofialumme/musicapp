@@ -50,32 +50,32 @@ public class ArtistController {
 	public String saveArtist(@Valid Artist artist, BindingResult result) {
 		if (result.hasErrors()) {
 			return "addartist";
-			
+
 		} else {
 			artistRepository.save(artist);
 			return "redirect:/artistlist";
 		}
 	}
-	
-	// save an added artist
-		@PostMapping("/artistlist/saveedit")
-		@PreAuthorize("hasAuthority('ADMIN')")
-		public String saveArtistEdit(@Valid Artist artist, BindingResult result) {
-			if (result.hasErrors()) {
-				return "editartist";
-				
-			} else {
-				artistRepository.save(artist);
-				return "redirect:/artistlist";
-			}
-		}
 
 	// edit an existing artist
 	@RequestMapping("/artistlist/edit/{id}")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editArtist(@PathVariable("id") Long artistId, Model model) {
-		model.addAttribute("artist", artistRepository.findById(artistId));
+		model.addAttribute("artist", artistRepository.findById(artistId).get());
 		return "editartist";
+	}
+
+	// save an edited artist
+	@PostMapping("/artistlist/saveedit")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public String saveArtistEdit(@Valid Artist artist, BindingResult result) {
+		if (result.hasErrors()) {
+			return "editartist";
+
+		} else {
+			artistRepository.save(artist);
+			return "redirect:/artistlist";
+		}
 	}
 
 	// delete an artist (and all their albums and songs)

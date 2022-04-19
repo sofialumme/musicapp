@@ -90,6 +90,18 @@ public class AlbumController {
 		}
 	}
 
+	// edit an existing album and add songs to it
+	@RequestMapping("/albumlist/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public String editAlbum(@PathVariable("id") Long albumId, Model model) {
+		model.addAttribute("album", albumRepository.findById(albumId).get());
+		model.addAttribute("artists", artistRepository.findAllSortByName());
+		model.addAttribute("genres", genreRepository.findAllSortByName());
+		model.addAttribute("songs", songRepository.findByAlbumSortByTrackno(albumId));
+		model.addAttribute("song", new Song());
+		return "editalbum";
+	}
+
 	// save an edited album
 	@PostMapping("/albumlist/saveedit")
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -105,18 +117,6 @@ public class AlbumController {
 			albumRepository.save(album);
 			return "redirect:/albumlist/edit/" + album.getId();
 		}
-	}
-
-	// edit an existing album and add songs to it
-	@RequestMapping("/albumlist/edit/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public String editAlbum(@PathVariable("id") Long albumId, Model model) {
-		model.addAttribute("album", albumRepository.findById(albumId).get());
-		model.addAttribute("artists", artistRepository.findAllSortByName());
-		model.addAttribute("genres", genreRepository.findAllSortByName());
-		model.addAttribute("songs", songRepository.findByAlbumSortByTrackno(albumId));
-		model.addAttribute("song", new Song());
-		return "editalbum";
 	}
 
 	// delete an album (and its songs)

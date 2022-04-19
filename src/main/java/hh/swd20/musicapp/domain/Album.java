@@ -25,7 +25,7 @@ public class Album {
 	private String name;
 
 	@NotNull(message = "Year cannot be null")
-	@PositiveOrZero(message = "Year must be a positive number")
+	@PositiveOrZero(message = "Year must be a positive integer")
 	private int year;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "album")

@@ -57,6 +57,14 @@ public class GenreController {
 		}
 	}
 
+	// edit an existing genre
+	@RequestMapping("/genrelist/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public String editGenre(@PathVariable("id") Long genreId, Model model) {
+		model.addAttribute("genre", genreRepository.findById(genreId).get());
+		return "editgenre";
+	}
+
 	// save an edited genre
 	@PostMapping("/genrelist/saveedit")
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -68,14 +76,6 @@ public class GenreController {
 			genreRepository.save(genre);
 			return "redirect:/genrelist";
 		}
-	}
-
-	// edit an existing genre
-	@RequestMapping("/genrelist/edit/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public String editGenre(@PathVariable("id") Long genreId, Model model) {
-		model.addAttribute("genre", genreRepository.findById(genreId));
-		return "editgenre";
 	}
 
 	// delete a genre (and all its albums and songs)

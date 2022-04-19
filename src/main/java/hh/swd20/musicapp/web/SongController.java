@@ -31,10 +31,10 @@ public class SongController {
 
 	@Autowired
 	private AlbumRepository albumRepository;
-	
+
 	@Autowired
 	private ArtistRepository artistRepository;
-	
+
 	@Autowired
 	private GenreRepository genreRepository;
 
@@ -46,15 +46,6 @@ public class SongController {
 		model.addAttribute("album", albumRepository.findById(albumId).get());
 		model.addAttribute("songs", songRepository.findByAlbumSortByTrackno(albumId));
 		return "songlist";
-	}
-
-	// edit an existing song
-	@RequestMapping("/songlist/edit/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public String editSong(@PathVariable("id") Long songId, Model model) {
-		model.addAttribute("song", songRepository.findById(songId));
-		model.addAttribute("album", songRepository.findById(songId).get().getAlbum());
-		return "editsong";
 	}
 
 	// save an added song
@@ -72,6 +63,15 @@ public class SongController {
 			songRepository.save(song);
 			return "redirect:/albumlist/edit/" + song.getAlbum().getId();
 		}
+	}
+
+	// edit an existing song
+	@RequestMapping("/songlist/edit/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public String editSong(@PathVariable("id") Long songId, Model model) {
+		model.addAttribute("song", songRepository.findById(songId).get());
+		model.addAttribute("album", songRepository.findById(songId).get().getAlbum());
+		return "editsong";
 	}
 
 	// save an edited song

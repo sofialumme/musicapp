@@ -2,16 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>Genres</title>
+<title th:text="#{genres-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>Genres</h1>
-	<p sec:authorize="hasAuthority('ADMIN')"><b>Warning!</b> Deleting a genre will delete all albums associated with it as well.</p>
+	<h1 th:text="#{genres-heading}"></h1>
+	<p sec:authorize="hasAuthority('ADMIN')"><b th:text="#{warning}"></b></p>
+	<p sec:authorize="hasAuthority('ADMIN')" th:text="#{genre-warning}"></p>
 	<table class="table table-striped">
 		<tr>
-			<th>Name</th>
+			<th th:text="#{name}"></th>
 			<th></th>
 			<th sec:authorize="hasAuthority('ADMIN')"></th>
 			<th sec:authorize="hasAuthority('ADMIN')"></th>
@@ -20,14 +21,17 @@
 		<tr th:each="genre : ${genres}">
 			<td th:text="${genre.name}">name</td>
 			<td><a th:href="@{/genrelist/{id}(id=${genre.id})}"
-				class="btn btn-primary">View Albums</a></td>
+				class="btn btn-primary" th:text="#{view-albums}"></a></td>
 			<td><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/genrelist/edit/{id}(id=${genre.id})}"
-				class="btn btn-warning">Edit</a></td>
+				class="btn btn-warning" th:text="#{edit}"></a></td>
 			<td><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/genrelist/delete/{id}(id=${genre.id})}" 
-				class="btn btn-danger">Delete</a></td>
+				class="btn btn-danger" th:text="#{delete}"></a></td>
 		</tr>
 	</table>
-	<a sec:authorize="hasAuthority('ADMIN')" href="/genrelist/add" class="btn btn-success">Add a New Genre</a>
-	<a href="/" class="btn btn-secondary">Front Page</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/genrelist/add" class="btn btn-success" th:text="#{new-genre}"></a>
+	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a href="/genrelist?lang=en" class="btn btn-primary">EN</a>
+    <a href="/genrelist?lang=fi" class="btn btn-primary">FI</a>
 </body>
 </html>

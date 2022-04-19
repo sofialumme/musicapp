@@ -2,18 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>Artists</title>
+<title th:text="#{artists-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet"
 	th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>Artists</h1>
-	<p sec:authorize="hasAuthority('ADMIN')"><b>Warning!</b> Deleting an artist will delete all their albums as well.</p>
+	<h1 th:text="#{artists-heading}"></h1>
+	<p sec:authorize="hasAuthority('ADMIN')"><b th:text="#{warning}"></b></p>
+	<p sec:authorize="hasAuthority('ADMIN')" th:text="#{artist-warning}"></p>
 	<table class="table table-striped">
 		<tr>
-			<th>Name</th>
-			<th>Country</th>
+			<th th:text="#{name}"></th>
+			<th th:text="#{country}"></th>
 			<th></th>
 			<th sec:authorize="hasAuthority('ADMIN')"></th>
 			<th sec:authorize="hasAuthority('ADMIN')"></th>
@@ -23,14 +24,17 @@
 			<td th:text="${artist.name}">name</td>
 			<td th:text="${artist.country}">country</td>
 			<td><a th:href="@{/artistlist/{id}(id=${artist.id})}"
-				class="btn btn-primary">View Albums</a></td>
+				class="btn btn-primary" th:text="#{view-albums}"></a></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/artistlist/edit/{id}(id=${artist.id})}"
-				class="btn btn-warning">Edit</a></td>
+				class="btn btn-warning" th:text="#{edit}"></a></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/artistlist/delete/{id}(id=${artist.id})}" 
-				class="btn btn-danger">Delete</a></td>
+				class="btn btn-danger" th:text="#{delete}"></a></td>
 		</tr>
 	</table>
-	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success">Add a New Artist</a>
-	<a href="/" class="btn btn-secondary">Front Page</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success" th:text="#{new-artist}"></a>
+	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a href="/artistlist/?lang=en" class="btn btn-primary">EN</a>
+    <a href="/artistlist/?lang=fi" class="btn btn-primary">FI</a>
 </body>
 </html>

@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>Albums</title>
+<title th:text="${genre.name} + ' ' + #{artist-genre-albums-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1 th:text="${genre.name} + ' Albums'"></h1>
+	<h1 th:text="${genre.name} + ' ' + #{artist-genre-albums-heading}"></h1>
 	<table class="table table-striped">
 		<tr>
-			<th>Name</th>
-			<th>Year</th>
-			<th>Artist</th>
+			<th th:text="#{name}"></th>
+			<th th:text="#{year}"></th>
+			<th th:text="#{artist}"></th>
 			<th></th>
 			<th sec:authorize="hasAuthority('ADMIN')"></th>
 		</tr>
@@ -22,12 +22,15 @@
 			<td th:text="${album.year}">country</td>
 			<td th:text="${album.artist.name}"></td>
 			<td><a th:href="@{/albumlist/{id}(id=${album.id})}"
-				class="btn btn-primary">View Tracks</a></td>
+				class="btn btn-primary" th:text="#{view-tracks}"></a></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/albumlist/edit/{id}(id=${album.id})}"
-				class="btn btn-warning">Edit</a></td>
+				class="btn btn-warning" th:text="#{edit}"></a></td>
 		</tr>
 	</table>
-	<a sec:authorize="hasAuthority('ADMIN')" href="/albumlist/add" class="btn btn-success">Add a New Album</a>
-	<a href="/" class="btn btn-secondary">Front Page</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/albumlist/add" class="btn btn-success" th:text="#{new-album}"></a>
+	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a th:href="@{'/genrelist/' + ${genre.id}} + '?lang=en'" class="btn btn-primary">EN</a>
+    <a th:href="@{'/genrelist/' + ${genre.id}} + '?lang=fi'" class="btn btn-primary">FI</a>
 </body>
 </html>

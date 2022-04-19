@@ -2,34 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>Edit Track</title>
+<title th:text="#{edit-track-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>Edit Track</h1>
+	<h1 th:text="#{edit-track-heading}"></h1>
 	<div>
 		<form th:object="${song}" th:action="@{/songlist/saveedit}" action="#" method="post">
 			<label for="id"></label>
 			<input type="hidden" id="id" th:field="*{id}" />
-			<label for="trackno">Track No.</label>
+			<label for="trackno" th:text="#{trackno}"></label>
 			<input type="text" id="trackno" th:field="*{trackno}" />
-			<p th:if="${#fields.hasErrors('trackno')}" th:errors="*{trackno}">Error</p>
+			<p th:if="${#fields.hasErrors('trackno')}" th:text="#{trackno-error}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
-			<label for="name">Name</label>
+			<label for="name" th:text="#{name}"></label>
 			<input type="text" th:field="*{name}" />
-			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
+			<p th:if="${#fields.hasErrors('name')}" th:text="#{name-error}">Error</p>
 			<div style="clear: both; display: block; height: 1em;"></div>
 			<select id="albums" th:field="*{album}" hidden="hidden">
 				<option th:value="${album.id}"></option>
 			</select>
 			<div style="clear: both; display: block; height: 1em;"></div>
-			<input type="submit" value="Save" class="btn btn-success"></input>
+			<button type="submit" th:text="#{save}" class="btn btn-success"></button>
 		</form>
 	</div>
 	<div style="clear: both; display: block; height: 1em;"></div>
-	<a th:href="@{/albumlist/{id}(id=${album.id})}" class="btn btn-primary">View Album</a>
-	<a th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning">Edit Album</a>
-	<a href="/" class="btn btn-secondary">Front Page</a>
+	<a th:href="@{/albumlist/{id}(id=${album.id})}" class="btn btn-primary" th:text="#{view-album}"></a>
+	<a th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning" th:text="#{edit-album}"></a>
+	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<a th:href="@{'/songlist/edit/' + ${song.id}} + '?lang=en'" class="btn btn-primary">EN</a>
+    <a th:href="@{'/songlist/edit/' + ${song.id}} + '?lang=fi'" class="btn btn-primary">FI</a>
 </body>
 </html>
