@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,6 +19,7 @@ public class Genre {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
+	@NotBlank(message = "Name cannot be null or blank")
 	private String name;
 	
 	@JsonIgnore

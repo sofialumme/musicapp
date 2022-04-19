@@ -10,6 +10,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import hh.swd20.musicapp.domain.Album;
 import hh.swd20.musicapp.domain.AlbumRepository;
+import hh.swd20.musicapp.domain.ArtistRepository;
+import hh.swd20.musicapp.domain.GenreRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,24 +19,31 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class AlbumRepositoryTest {
-	
+
 	@Autowired
 	private AlbumRepository albumRepository;
-	
+
+	@Autowired
+	private ArtistRepository artistRepository;
+
+	@Autowired
+	private GenreRepository genreRepository;
+
 	@Test
 	public void createNewAlbum() {
-		Album album = new Album("Album", 2022, null, null);
+		Album album = new Album("Album", 2022, artistRepository.findByName("Ghost").get(0),
+				genreRepository.findByName("Metal").get(0));
 		albumRepository.save(album);
 		assertThat(album.getId()).isNotNull();
 	}
-	
+
 	@Test
 	public void deleteAlbum() {
 		assertThat(albumRepository.findById((long) 7)).isNotEmpty();
 		albumRepository.deleteById((long) 7);
 		assertThat(albumRepository.findById((long) 7)).isEmpty();
 	}
-	
+
 	@Test
 	public void findByNameReturnsYear() {
 		List<Album> albums = albumRepository.findByName("Prequelle");

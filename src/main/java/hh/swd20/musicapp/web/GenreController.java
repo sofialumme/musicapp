@@ -3,10 +3,13 @@ package hh.swd20.musicapp.web;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,9 +47,14 @@ public class GenreController {
 	// save an added genre
 	@PostMapping("/genrelist/save")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String saveGenre(Genre genre) {
-		genreRepository.save(genre);
-		return "redirect:/genrelist";
+	public String saveGenre(@Valid Genre genre, BindingResult result) {
+		if (result.hasErrors()) {
+			return "redirect:/genrelist";
+			
+		} else {
+			genreRepository.save(genre);
+			return "redirect:/genrelist";
+		}
 	}
 	
 	// edit an existing genre

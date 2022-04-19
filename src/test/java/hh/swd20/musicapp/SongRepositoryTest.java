@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import hh.swd20.musicapp.domain.AlbumRepository;
 import hh.swd20.musicapp.domain.Song;
 import hh.swd20.musicapp.domain.SongRepository;
 
@@ -21,9 +22,12 @@ public class SongRepositoryTest {
 	@Autowired
 	private SongRepository songRepository;
 	
+	@Autowired
+	private AlbumRepository albumRepository;
+
 	@Test
 	public void createNewSong() {
-		Song song = new Song(1, "Song", null);
+		Song song = new Song(15, "Song", albumRepository.findByName("Prequelle").get(0));
 		songRepository.save(song);
 		assertThat(song.getId()).isNotNull();
 	}

@@ -3,10 +3,13 @@ package hh.swd20.musicapp.web;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,9 +47,14 @@ public class ArtistController {
 	// save an added artist
 	@PostMapping("/artistlist/save")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String saveArtist(Artist artist) {
-		artistRepository.save(artist);
-		return "redirect:/artistlist";
+	public String saveArtist(@Valid Artist artist, BindingResult result) {
+		if (result.hasErrors()) {
+			return "redirect:/artistlist";
+			
+		} else {
+			artistRepository.save(artist);
+			return "redirect:/artistlist";
+		}
 	}
 
 	// edit an existing artist

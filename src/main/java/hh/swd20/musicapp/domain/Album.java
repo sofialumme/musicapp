@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Album {
@@ -18,7 +21,11 @@ public class Album {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
+	@NotBlank(message = "Name cannot be null or blank")
 	private String name;
+
+	@NotNull(message = "Year cannot be null")
+	@PositiveOrZero(message = "Year must be a positive number")
 	private int year;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "album")
@@ -26,10 +33,12 @@ public class Album {
 	
 	@ManyToOne
     @JoinColumn(name = "artist_id")
+	@NotNull
 	private Artist artist;
 	
 	@ManyToOne
     @JoinColumn(name = "genre_id")
+	@NotNull
 	private Genre genre;
 	
 	public Album() {
