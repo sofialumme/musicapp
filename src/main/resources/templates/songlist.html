@@ -4,6 +4,7 @@
 <head>
 <title th:text="#{tracks-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
@@ -22,6 +23,7 @@
 	<h1 th:text="${album.name}"></h1>
 	<h2 th:text="${album.artist.name} + ' ● ' + ${album.year} + ' ● ' + ${album.genre.name}"></h2>
 	<h2 th:text="#{tracks-heading}"></h2>
+	<div class="table-responsive">
 	<table class="table table-striped">
 		<tr>
 			<th th:text="#{trackno}"></th>
@@ -36,6 +38,7 @@
 				class="btn btn-warning" th:text="#{edit}"></a></td>
 		</tr>
 	</table>
+	</div>
 	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/edit/{id}(id=${album.id})}" class="btn btn-warning" th:text="#{edit-album}"></a>
 	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/albumlist/delete/{id}(id=${album.id})}" class="btn btn-danger" th:text="#{delete-album}"></a>
 	<div style="clear: both; display: block; height: 1em;"></div>

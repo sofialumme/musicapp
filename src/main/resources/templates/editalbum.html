@@ -4,6 +4,7 @@
 <head>
 <title th:text="#{edit-album-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
@@ -48,6 +49,7 @@
 	<div style="clear: both; display: block; height: 1em;"></div>
 	<div>
 	<h2 th:text="#{tracks-heading}"></h2>
+	<div class="table-responsive">
 	<table class="table table-striped">
 		<tr>
 			<th th:text="#{trackno}"></th>
@@ -65,6 +67,7 @@
 				class="btn btn-danger" th:text="#{delete}"></a></td>
 		</tr>
 	</table>
+	</div>
 	</div>
 	<div>
 	<h2 th:text="#{new-track}"></h2>

@@ -4,6 +4,7 @@
 <head>
 <title th:text="#{artists-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet"
 	th:href="@{/css/bootstrap.min.css}" />
 </head>
@@ -23,6 +24,7 @@
 	<h1 th:text="#{artists-heading}"></h1>
 	<p sec:authorize="hasAuthority('ADMIN')"><b th:text="#{warning}"></b></p>
 	<p sec:authorize="hasAuthority('ADMIN')" th:text="#{artist-warning}"></p>
+	<div class="table-responsive">
 	<table class="table table-striped">
 		<tr>
 			<th th:text="#{name}"></th>
@@ -43,6 +45,7 @@
 				class="btn btn-danger" th:text="#{delete}"></a></td>
 		</tr>
 	</table>
+	</div>
 	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success" th:text="#{new-artist}"></a>
 	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
 	

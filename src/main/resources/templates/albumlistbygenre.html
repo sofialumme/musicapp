@@ -4,6 +4,7 @@
 <head>
 <title th:text="${genre.name} + ' ' + #{artist-genre-albums-heading}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
@@ -20,6 +21,7 @@
 		</span>
 	</nav>
 	<h1 th:text="${genre.name} + ' ' + #{artist-genre-albums-heading}"></h1>
+	<div class="table-responsive">
 	<table class="table table-striped">
 		<tr>
 			<th th:text="#{name}"></th>
@@ -39,6 +41,7 @@
 				class="btn btn-warning" th:text="#{edit}"></a></td>
 		</tr>
 	</table>
+	</div>
 	<a sec:authorize="hasAuthority('ADMIN')" href="/albumlist/add" class="btn btn-success" th:text="#{new-album}"></a>
 	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
 	
