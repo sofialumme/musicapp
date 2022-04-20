@@ -37,6 +37,7 @@ public class MusicappApplication {
 		SpringApplication.run(MusicappApplication.class, args);
 	}
 	
+	/*
 	@Bean
 	public CommandLineRunner demo(GenreRepository genreRepository, ArtistRepository artistRepository, AlbumRepository albumRepository, SongRepository songRepository, UserRepository userRepository) {
 		return (args) -> {
@@ -93,10 +94,9 @@ public class MusicappApplication {
 			}
 			
 			//create a demo admin user
-			// musicapp_admin, hunter2
 			User admin = new User("musicapp_admin", "$2a$10$8smma/bEFXpJw5ZwHhuoz.MvAJcUbgJO7raj7Yotvz7Dr8x74mWIS", "ADMIN");
 			userRepository.save(admin);
 		};
 	}
-
+	*/
 }
