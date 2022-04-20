@@ -8,6 +8,18 @@
 	th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+	<span>
+		<a href="/" class="navbar-brand" th:text="#{front-page}"></a>
+		<a href="/artistlist" class="navbar-brand" th:text="#{artists-heading}"></a>
+		<a href="/genrelist" class="navbar-brand" th:text="#{genres-heading}"></a>
+		<a href="/albumlist" class="navbar-brand" th:text="#{albums-heading}"></a>
+		</span>
+		<span>
+		<a href="/artistlist/?lang=en" class="btn btn-dark">EN</a>
+		<a href="/artistlist/?lang=fi" class="btn btn-dark">FI</a>
+		</span>
+	</nav>
 	<h1 th:text="#{artists-heading}"></h1>
 	<p sec:authorize="hasAuthority('ADMIN')"><b th:text="#{warning}"></b></p>
 	<p sec:authorize="hasAuthority('ADMIN')" th:text="#{artist-warning}"></p>
@@ -33,8 +45,16 @@
 	</table>
 	<a sec:authorize="hasAuthority('ADMIN')" href="/artistlist/add" class="btn btn-success" th:text="#{new-artist}"></a>
 	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
+	
 	<div style="clear: both; display: block; height: 1em;"></div>
-	<a href="/artistlist/?lang=en" class="btn btn-primary">EN</a>
-    <a href="/artistlist/?lang=fi" class="btn btn-primary">FI</a>
+	<a sec:authorize="isAnonymous()" href="/login" class="btn btn-primary"
+		th:text="#{sign-in}">Sign In</a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<div>
+		<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
+			method="post">
+			<button type="submit" class="btn btn-danger" th:text="#{sign-out}"></button>
+		</form>
+	</div>
 </body>
 </html>

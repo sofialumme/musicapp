@@ -7,6 +7,18 @@
 <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+	<span>
+		<a href="/" class="navbar-brand" th:text="#{front-page}"></a>
+		<a href="/artistlist" class="navbar-brand" th:text="#{artists-heading}"></a>
+		<a href="/genrelist" class="navbar-brand" th:text="#{genres-heading}"></a>
+		<a href="/albumlist" class="navbar-brand" th:text="#{albums-heading}"></a>
+		</span>
+		<span>
+		<a th:href="@{'/artistlist/' + ${artist.id}} + '?lang=en'" class="btn btn-dark">EN</a>
+		<a th:href="@{'/artistlist/' + ${artist.id}} + '?lang=fi'" class="btn btn-dark">FI</a>
+		</span>
+	</nav>
 	<h1 th:text="${artist.name} + ' ' + #{artist-genre-albums-heading}"></h1>
 	<table class="table table-striped">
 		<tr>
@@ -29,8 +41,16 @@
 	</table>
 	<a sec:authorize="hasAuthority('ADMIN')" href="/albumlist/add" class="btn btn-success" th:text="#{new-album}"></a>
 	<a href="/" class="btn btn-secondary" th:text="#{front-page}"></a>
+	
 	<div style="clear: both; display: block; height: 1em;"></div>
-	<a th:href="@{'/artistlist/' + ${artist.id}} + '?lang=en'" class="btn btn-primary">EN</a>
-    <a th:href="@{'/artistlist/' + ${artist.id}} + '?lang=fi'" class="btn btn-primary">FI</a>
+	<a sec:authorize="isAnonymous()" href="/login" class="btn btn-primary"
+		th:text="#{sign-in}">Sign In</a>
+	<div style="clear: both; display: block; height: 1em;"></div>
+	<div>
+		<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
+			method="post">
+			<button type="submit" class="btn btn-danger" th:text="#{sign-out}"></button>
+		</form>
+	</div>
 </body>
 </html>
