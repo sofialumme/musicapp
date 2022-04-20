@@ -22,25 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-		 .authorizeRequests()
-		 .antMatchers("/h2-console/**").permitAll()
-		 .and()
-		 .csrf().ignoringAntMatchers("/h2-console/**")
-		 .and()
-		 .headers().frameOptions().sameOrigin()
-		 .and()
-		 .formLogin()
-		 .loginPage("/login")
-		 .defaultSuccessUrl("/", true)
-		 .permitAll()
-		.and()
-		 .logout()
-		 .logoutSuccessUrl("/")
-		 .permitAll();
-		 }
-	
-	/*
 	 http
 		 .authorizeRequests()
 		 .and()
@@ -53,7 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 .logoutSuccessUrl("/")
 		 .permitAll();
 		 }
-	 */
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
